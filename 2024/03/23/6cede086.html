@@ -1,0 +1,199 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>ssh访问 | qwqcoder's Blog</title><meta name="author" content="qwqcoder"><meta name="copyright" content="qwqcoder"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="ssh连接过程密钥类型  认证流程SSH(Secure Shell)是一种用于在网络上安全地进行远程登录和执行命令的协议。下面是 SSH 连接的简要流程：  客户端发起连接请求： 用户在本地计算机上的 SSH 客户端（比如 OpenSSH 或 PuTTY）输入远程服务器的地址和用户名，并发起连接请求。  服务器端响应： 服务器监听 SSH 连接请求，并在收到连接请求后响应客户端。  密钥交换： 客">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ssh访问">
+<meta property="og:url" content="https://121.36.61.23/2024/03/23/6cede086.html">
+<meta property="og:site_name" content="qwqcoder&#39;s Blog">
+<meta property="og:description" content="ssh连接过程密钥类型  认证流程SSH(Secure Shell)是一种用于在网络上安全地进行远程登录和执行命令的协议。下面是 SSH 连接的简要流程：  客户端发起连接请求： 用户在本地计算机上的 SSH 客户端（比如 OpenSSH 或 PuTTY）输入远程服务器的地址和用户名，并发起连接请求。  服务器端响应： 服务器监听 SSH 连接请求，并在收到连接请求后响应客户端。  密钥交换： 客">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://121.36.61.23/img/avatar.jpg">
+<meta property="article:published_time" content="2024-03-23T13:18:38.844Z">
+<meta property="article:modified_time" content="2024-03-23T13:18:38.844Z">
+<meta property="article:author" content="qwqcoder">
+<meta property="article:tag" content="ssh">
+<meta property="article:tag" content="rsa加密">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://121.36.61.23/img/avatar.jpg"><link rel="shortcut icon" href="/img/logo.png"><link rel="canonical" href="https://121.36.61.23/2024/03/23/6cede086.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: {"limitDay":500,"position":"top","messagePrev":"本博客距离上次更新已经有","messageNext":"天了, 博客内容或许已经过时."},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: qwqcoder","link":"链接: ","source":"来源: qwqcoder's Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'ssh访问',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-03-23 21:18:38'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.1.1"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">12</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/default_top_img.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="qwqcoder's Blog"><img class="site-icon" src="/img/logo.png"/><span class="site-name">qwqcoder's Blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">ssh访问</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-03-23T13:18:38.844Z" title="发表于 2024-03-23 21:18:38">2024-03-23</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-03-23T13:18:38.844Z" title="更新于 2024-03-23 21:18:38">2024-03-23</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="ssh访问"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="ssh连接过程"><a href="#ssh连接过程" class="headerlink" title="ssh连接过程"></a>ssh连接过程</h1><h2 id="密钥类型"><a href="#密钥类型" class="headerlink" title="密钥类型"></a>密钥类型</h2><p><img src="../img/ssh%E8%AE%BF%E9%97%AE.assets/image-20240316001710619.png" alt="image-20240316001710619"></p>
+<p><img src="../img/ssh%E8%AE%BF%E9%97%AE.assets/image-20240316001727647.png" alt="image-20240316001727647"></p>
+<h2 id="认证流程"><a href="#认证流程" class="headerlink" title="认证流程"></a>认证流程</h2><p><code>SSH(Secure Shell)</code>是一种用于在网络上安全地进行远程登录和执行命令的协议。下面是 SSH 连接的简要流程：</p>
+<ol>
+<li><p><strong>客户端发起连接请求：</strong> 用户在本地计算机上的 <code>SSH</code> 客户端（比如 <code>OpenSSH</code> 或 <code>PuTTY</code>）输入远程服务器的地址和用户名，并发起连接请求。</p>
+</li>
+<li><p><strong>服务器端响应：</strong> 服务器监听 SSH 连接请求，并在收到连接请求后响应客户端。</p>
+</li>
+<li><p><strong>密钥交换：</strong> 客户端和服务器之间进行密钥交换，确保数据传输的安全性。这个过程通常包括以下步骤：</p>
+<ul>
+<li>客户端向服务器发送一个连接请求，并发送自己支持的加密算法列表。</li>
+<li>服务器从接收到的加密算法列表中选择一个加密算法，并发送自己的公钥给客户端。</li>
+<li>客户端使用服务器的公钥对一个随机生成的<strong>会话密钥(对称密钥)</strong>进行加密，并将加密后的会话密钥发送给服务器。</li>
+<li>服务器使用自己的私钥解密客户端发送的会话密钥。</li>
+</ul>
+</li>
+<li><p><strong>认证：</strong> 客户端将用户凭据（如密码或 SSH 密钥）发送给服务器进行身份认证。如果凭据验证成功，客户端将被授权访问服务器。</p>
+</li>
+<li><p><strong>会话建立：</strong> 认证成功后，客户端和服务器建立起安全的通信会话，可以在该会话中安全地传输数据。</p>
+</li>
+<li><p><strong>数据传输：</strong> 客户端和服务器之间可以安全地传输数据，包括登录命令、文件传输、远程执行命令等操作。</p>
+</li>
+<li><p><strong>连接关闭：</strong> 当用户退出登录或连接超时时，连接被关闭，SSH 会话结束。</p>
+</li>
+</ol>
+<p>总的来说，SSH 连接的流程涉及到密钥交换、身份认证和安全通信会话建立等步骤，确保了数据传输的安全性和可靠性。</p>
+<h1 id="区分authorized-keys与known-hosts文件"><a href="#区分authorized-keys与known-hosts文件" class="headerlink" title="区分authorized_keys与known_hosts文件"></a>区分authorized_keys与known_hosts文件</h1><p><code>authorized_keys</code> 和 <code>known_hosts</code> 都是与 SSH 密钥认证相关的文件，但它们在功能和用途上有所不同：</p>
+<ol>
+<li><p><strong>authorized_keys：</strong></p>
+<ul>
+<li>位置：<code>authorized_keys</code> 文件位于服务器上的用户家目录下的 <code>.ssh</code> 目录中（通常是 <code>~/.ssh/authorized_keys</code>）。</li>
+<li>用途：<code>authorized_keys</code> 文件用于存储用户的公钥，以便服务器可以使用这些公钥来验证用户的身份。当用户尝试通过 SSH 连接到服务器时，服务器会检查该用户的 <code>authorized_keys</code> 文件，以确定是否允许连接。如果用户的公钥在 <code>authorized_keys</code> 文件中被发现，则服务器会允许用户连接，并使用相应的私钥进行身份验证。</li>
+</ul>
+</li>
+<li><p><strong>known_hosts：</strong></p>
+<ul>
+<li>位置：<code>known_hosts</code> 文件位于用户家目录下的 <code>.ssh</code> 目录中（通常是 <code>~/.ssh/known_hosts</code>）。</li>
+<li>用途：<code>known_hosts</code> 文件用于存储用户访问过的远程主机的公钥信息。当用户首次连接到一个远程主机时，SSH 客户端会将该主机的公钥保存到自己的 <code>known_hosts</code> 文件中。随后，当用户再次连接到同一台主机时，SSH 客户端会使用 <code>known_hosts</code> 文件中存储的公钥来验证主机的身份，以确保连接的安全性。</li>
+</ul>
+</li>
+</ol>
+<p>因此，<code>authorized_keys</code> 文件用于服务器端存储用户的公钥，用于用户的身份验证；而 <code>known_hosts</code> 文件用于客户端存储已知主机的公钥，用于验证远程主机的身份。这两个文件在 SSH 认证过程中扮演着不同的角色，但都是确保连接安全性的重要组成部分。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://121.36.61.23">qwqcoder</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://121.36.61.23/2024/03/23/6cede086.html">https://121.36.61.23/2024/03/23/6cede086.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://121.36.61.23" target="_blank">qwqcoder's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/ssh/">ssh</a><a class="post-meta__tags" href="/tags/rsa%E5%8A%A0%E5%AF%86/">rsa加密</a></div><div class="post_share"><div class="social-share" data-image="/img/avatar.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/03/23/4f2ce235.html" title="背包专题"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">背包专题</div></div></a></div><div class="next-post pull-right"><a href="/2024/03/23/29c7973.html" title="高数公式"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">高数公式</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">qwqcoder</div><div class="author-info__description">所有你不够满意的现在, 都有一个不够努力的曾经~</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">12</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://space.bilibili.com/483387122"><i class="fab fa-bilibili"></i><span>任意门</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/qwqcoder" target="_blank" title="Github"><i class="fab fa-github" style="color: #hdhfbb;"></i></a><a class="social-icon" href="mailto:1958448979@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #000000;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ssh%E8%BF%9E%E6%8E%A5%E8%BF%87%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">ssh连接过程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%86%E9%92%A5%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.1.</span> <span class="toc-text">密钥类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A4%E8%AF%81%E6%B5%81%E7%A8%8B"><span class="toc-number">1.2.</span> <span class="toc-text">认证流程</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8C%BA%E5%88%86authorized-keys%E4%B8%8Eknown-hosts%E6%96%87%E4%BB%B6"><span class="toc-number">2.</span> <span class="toc-text">区分authorized_keys与known_hosts文件</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/23/ab21860c.html" title="hexo">hexo</a><time datetime="2024-03-23T13:18:38.844Z" title="发表于 2024-03-23 21:18:38">2024-03-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/23/f1705634.html" title="hexo远端部署">hexo远端部署</a><time datetime="2024-03-23T13:18:38.844Z" title="发表于 2024-03-23 21:18:38">2024-03-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/23/80bdef1f.html" title="Java 语法学习">Java 语法学习</a><time datetime="2024-03-23T13:18:38.844Z" title="发表于 2024-03-23 21:18:38">2024-03-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/23/ac3a716d.html" title="c++ 语法学习">c++ 语法学习</a><time datetime="2024-03-23T13:18:38.844Z" title="发表于 2024-03-23 21:18:38">2024-03-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/23/d14b420f.html" title="多路归并">多路归并</a><time datetime="2024-03-23T13:18:38.844Z" title="发表于 2024-03-23 21:18:38">2024-03-23</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2024 By qwqcoder</div><div class="footer_custom_text">qwqcoder</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>

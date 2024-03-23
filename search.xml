@@ -1,0 +1,668 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>hexo</title>
+    <url>/2024/03/23/ab21860c.html</url>
+    <content><![CDATA[<h1 id="关于配置文件"><a href="#关于配置文件" class="headerlink" title="关于配置文件"></a>关于配置文件</h1><p>在 <code>hexo</code> 的根目录创建一个文件 <code>_config.butterfly.yml</code>，并把主题目录的 <code>_config.yml</code>内容复制到<code>_config.butterfly.yml</code> 中。( 注意: 复制的是主題的 <code>_config.yml</code> ，而不是 <code>hexo</code> 的 <code>_config.yml</code>)</p>
+<blockquote>
+<p><strong>注意</strong>： 不能把主題目录的 <code>_config.yml</code>删掉</p>
+</blockquote>
+<p>注意： 以后只需要在 <code>_config.butterfly.yml</code> 进行配置就行。<br>如果使用了 <code>_config.butterfly.yml</code>， 配置主题的 <code>_config.yml</code> 将不会有效果。</p>
+<p><code>Hexo</code>会自动合并主题中的 <code>_config.yml</code> 和 <code>_config.butterfly.yml</code> 里的配置，如果存在同名配置，会使用 <code>_config.butterfly.yml</code> 的配置，其优先度较高。</p>
+<h1 id="博客撰写步骤"><a href="#博客撰写步骤" class="headerlink" title="博客撰写步骤"></a>博客撰写步骤</h1><p><strong>第一步</strong>: 创建 <code>.md</code> 文件</p>
+<ul>
+<li><p>方法一: <code>cd</code> 进入 <code>hexo</code> 根目录, 在 <code>Git Bash Here</code> 中执行命令: <code>hexo new &#39;blog-name&#39;</code> , 此时 <code>hexo</code> 会在 <code>\source\_posts</code> 下生成名为 <code>blog-name</code> 的 <code>.md</code> 文件, 用这个命令可以自动生成文件, 其中包含默认内容如下:</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">title:</span> <span class="string">blog-name</span></span><br><span class="line"><span class="attr">date:</span> <span class="string">创建时间</span></span><br><span class="line"><span class="attr">tags:</span> </span><br><span class="line">	<span class="bullet">-</span> <span class="string">tag1</span></span><br><span class="line">	<span class="bullet">-</span> <span class="string">tag2</span> <span class="comment"># 一定注意空格</span></span><br><span class="line"><span class="attr">description:</span> <span class="string">description</span></span><br><span class="line"><span class="attr">cover:</span> <span class="string">封面地址</span></span><br><span class="line"><span class="attr">top_img:</span> <span class="string">个性化顶部图</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>方法二: 也可以手动创建 <code>.md</code> 文件</p>
+</li>
+</ul>
+<p><strong>第二步</strong>: 编写 <code>md</code> 文档内容并保存</p>
+<ul>
+<li>使用 <code>markdown</code> 语法, 撰写博客内容即可</li>
+</ul>
+<p><strong>第三步</strong>: 清理然后生成, 然后推送到远端仓库</p>
+<ul>
+<li><p><code>hexo</code> 根目录下进入 <code>bash</code> 终端, 依次输入以下命令:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="优化博客链接配置"><a href="#优化博客链接配置" class="headerlink" title="优化博客链接配置"></a>优化博客链接配置</h1><p><code>Hexo</code> 文章链接默认的生成规则是：<code>:year/:month/:day/:title</code>，是按照年、月、日、标题来生成的。</p>
+<p>这样一来, 当我们修改了文章的日期或者标题, 链接很可能就失效了, 特别是文章标题包含中文时, 被转译为 URL 编码后, 链接就特别长😣😣😣</p>
+<p><strong>解决方案</strong></p>
+<ul>
+<li><p>安装插件</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-abbrlink --save</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改 <code>_config.yml</code> 配置文件</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># permalink: :year/:month/:day/:title/</span></span><br><span class="line"><span class="attr">permalink:</span> <span class="string">:year/:month/:day/:abbrlink.html</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="个性化blog图片"><a href="#个性化blog图片" class="headerlink" title="个性化blog图片"></a>个性化blog图片</h1><ul>
+<li>修改主题路径下的 <code>_config.yml</code> 配置文件</li>
+</ul>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">cover:</span></span><br><span class="line">  <span class="comment"># display the cover or not (是否顯示文章封面)</span></span><br><span class="line">  <span class="attr">index_enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">aside_enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">archives_enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># the position of cover in home page (封面顯示的位置)</span></span><br><span class="line">  <span class="comment"># left/right/both</span></span><br><span class="line">  <span class="attr">position:</span> <span class="string">right</span></span><br><span class="line">  <span class="comment"># When cover is not set, the default cover is displayed (當沒有設置cover時，默認的封面顯示)</span></span><br><span class="line">  <span class="attr">default_cover:</span></span><br><span class="line">    <span class="comment"># - https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg</span></span><br></pre></td></tr></table></figure>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>index_enable</td>
+<td>主页是否显示文章封面</td>
+</tr>
+<tr>
+<td>aside_enable</td>
+<td>侧栏是否显示</td>
+</tr>
+<tr>
+<td>archives_enable</td>
+<td>归档页面是否显示文章封面</td>
+</tr>
+<tr>
+<td>position</td>
+<td>主页卡片文章封面显示位置<br />- left：全部显示左边<br />- right：全部显示右边<br />- both：左右交替</td>
+</tr>
+<tr>
+<td>default_cover</td>
+<td>默认的图片配置</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">default_cover:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg.png</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg2.png</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://jsd.012700.xyz/gh/jerryc127/CDN@latest/cover/default_bg3.png</span></span><br></pre></td></tr></table></figure>
+<h1 id="待办"><a href="#待办" class="headerlink" title="待办"></a>待办</h1><ul>
+<li>检索功能</li>
+<li>评论功能</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo远端部署</title>
+    <url>/2024/03/23/f1705634.html</url>
+    <content><![CDATA[<h1 id="创建hexo项目"><a href="#创建hexo项目" class="headerlink" title="创建hexo项目"></a>创建hexo项目</h1><p><img src="https://s2.loli.net/2024/03/16/ZcelUIzSBPvW4XO.png" alt="image-20240315212549119"></p>
+<p><code>test</code> 就是准备好用来初始化 <code>hexo</code> 项目的根目录</p>
+<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><ol>
+<li><p>进入 <code>test</code> 执行 <code>hexo init</code> </p>
+<p>不出意外的话, <code>test</code> 路径下会出现以下内容</p>
+</li>
+</ol>
+<p><img src="https://s2.loli.net/2024/03/16/tFHRKZfAL4nEhxb.png" alt="image-20240315213900716"></p>
+<p>​        这就是一个初始的 <strong>hexo</strong> 项目了</p>
+<ol>
+<li><p>进入 <code>test</code> 执行 <code>git init</code></p>
+<p>将 <code>test</code> 路径初始化为一个 <code>git</code> 项目, 目的是方便后续的远端同步</p>
+</li>
+</ol>
+<h1 id="安装theme"><a href="#安装theme" class="headerlink" title="安装theme"></a>安装theme</h1><p><a href="https://butterfly.js.org/posts/21cfbf15/">关于 <code>butterfly</code> 主题的官方安装教程</a></p>
+<p>进入 <code>test\themes</code> 路径下执行 <code>git clone -b master https://github.com/jerryc127/hexo-theme-butterfly.git</code></p>
+<blockquote>
+<p> 此时会将主题项目从 github 上克隆下来</p>
+</blockquote>
+<p>成功后, <code>test\themes</code> 内容如下</p>
+<p><img src="https://s2.loli.net/2024/03/16/UxJQ9es7KWZ4bFI.png" alt="image-20240315214900875"></p>
+<p>关于如何个性化配置主题, 这里不做记录</p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ul>
+<li><code>test</code> 根目录下, <code>.config.yml</code> 中 <code>themes</code> 参数需要配置为 <code>test\themes</code> 路径下, 你的主题所在的文件名这里就是 <code>hexo-theme-butterfly</code></li>
+</ul>
+<p><img src="https://s2.loli.net/2024/03/16/cwaXDnPtFezoxEr.png" alt="image-20240315214958424"></p>
+<ul>
+<li><code>butterfly</code> 需要单独的解析 <code>.pug</code> 的插件, 在 <code>test</code> 下执行 <code>npm install hexo-renderer-pug hexo-renderer-stylus --save</code></li>
+</ul>
+<h1 id="配置deploy插件"><a href="#配置deploy插件" class="headerlink" title="配置deploy插件"></a>配置deploy插件</h1><p><a href="https://hexo.io/zh-cn/docs/one-command-deployment.html">hexo-deployer-git  官方教程</a></p>
+<p>回到 <code>test</code> 根目录, 进入 <code>git bash</code> 执行 <code>npm install hexo-deployer-git --save</code></p>
+<h2 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h2><ol>
+<li>安装 <a href="https://github.com/hexojs/hexo-deployer-git">hexo-deployer-git</a>。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+<ol>
+<li>修改 <code>.config.yml</code> 配置</li>
+</ol>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">&lt;repository</span> <span class="string">url&gt;</span> <span class="comment">#https://bitbucket.org/JohnSmith/johnsmith.bitbucket.io</span></span><br><span class="line">  <span class="attr">branch:</span> [<span class="string">branch</span>]</span><br><span class="line">  <span class="attr">message:</span> [<span class="string">message</span>]</span><br></pre></td></tr></table></figure>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数</th>
+<th style="text-align:left">描述</th>
+<th style="text-align:left">默认</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>repo</code></td>
+<td style="text-align:left">库（Repository）地址</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>branch</code></td>
+<td style="text-align:left">分支名称</td>
+<td style="text-align:left"><code>gh-pages</code> (GitHub) <code>coding-pages</code> (Coding.net) <code>master</code> (others)</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>message</code></td>
+<td style="text-align:left">自定义提交信息</td>
+<td style="text-align:left"><code>Site updated: &#123;&#123; now('YYYY-MM-DD HH:mm:ss') &#125;&#125;</code>)</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>token</code></td>
+<td style="text-align:left">可选的令牌值，用于认证 repo。用 <code>$</code> 作为前缀从而从环境变量中读取令牌</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="同步远端仓库"><a href="#同步远端仓库" class="headerlink" title="同步远端仓库"></a>同步远端仓库</h1><ol>
+<li><p>修改 <code>.config.yml</code> 配置</p>
+<ul>
+<li>需要在 <strong>github</strong> 上创建名为 <code>test.github.io</code>, 这是专门用来推送 <code>hexo g</code> 生成的静态网页</li>
+</ul>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">master</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">git@github.com:qwqcoder/test.github.io.git</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建一个 <strong>git</strong> 仓库 <code>test_push.git</code>, 用于推送整个 <code>hexo</code> 项目(也就是 <code>test</code> 路径的所有内容)</p>
+<p><strong>步骤</strong>:</p>
+<ul>
+<li><code>git add .</code></li>
+<li><code>git add remote test https://github.com/qwqcoder/test_push.git</code></li>
+<li><code>git push -u test master</code></li>
+</ul>
+<p><img src="https://s2.loli.net/2024/03/16/NJl9xBYPC3G6ph4.png" alt="image-20240315221448604"></p>
+</li>
+<li><p><strong>action</strong> 自动话部署</p>
+<ul>
+<li>给 <code>test_push.git</code> 添加一个工作流配置文件</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li><a href="https://sanonz.github.io/2020/deploy-a-hexo-blog-from-github-actions/">参考教程</a></li>
+</ul>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">CI</span></span><br><span class="line"></span><br><span class="line"><span class="attr">on:</span></span><br><span class="line">  <span class="attr">push:</span></span><br><span class="line">    <span class="attr">branches:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">master</span></span><br><span class="line"></span><br><span class="line"><span class="attr">env:</span> </span><br><span class="line">  <span class="attr">GIT_USER:</span> <span class="string">qwqcoder</span></span><br><span class="line">  <span class="attr">GIT_EMAIL:</span> <span class="number">1958448979</span><span class="string">@qq.com</span></span><br><span class="line">  <span class="attr">THEME_REPO:</span> <span class="string">qwqcoder/blog_theme</span> <span class="comment"># blog_theme 是我用来专门存放主题项目的仓库</span></span><br><span class="line">  <span class="attr">THEME_BRANCH:</span> <span class="string">master</span></span><br><span class="line">  <span class="attr">DEPLOY_REPO:</span> <span class="string">qwqcoder/test.github.io</span></span><br><span class="line">  <span class="attr">DEPLOY_BRANCH:</span> <span class="string">master</span></span><br><span class="line"></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="attr">build:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">Build</span> <span class="string">on</span> <span class="string">node</span> <span class="string">$&#123;&#123;</span> <span class="string">matrix.node_version</span> <span class="string">&#125;&#125;</span> <span class="string">and</span> <span class="string">$&#123;&#123;</span> <span class="string">matrix.os</span> <span class="string">&#125;&#125;</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line">    <span class="attr">strategy:</span></span><br><span class="line">      <span class="attr">matrix:</span></span><br><span class="line">        <span class="attr">os:</span> [<span class="string">ubuntu-latest</span>]</span><br><span class="line">        <span class="attr">node_version:</span> [<span class="number">16.</span><span class="string">x</span>]</span><br><span class="line"></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">    <span class="comment"># 将当前所在repository拉取到github的虚拟机容器工作目录下</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Checkout</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">actions/checkout@v4</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 因为hexo使用的theme主题是一个单独的git仓库项目, 给blog_push仓库push更新时会忽略其中嵌套的repo仓库</span></span><br><span class="line">    <span class="comment"># 所以事实上blog_push.git中是没有theme相关文件的, 需要额外的拉取, 同理放入容器的工作目录下</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Checkout</span> <span class="string">theme</span> <span class="string">repo</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">actions/checkout@v4</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">repository:</span> <span class="string">$&#123;&#123;</span> <span class="string">env.THEME_REPO</span> <span class="string">&#125;&#125;</span></span><br><span class="line">          <span class="attr">ref:</span> <span class="string">$&#123;&#123;</span> <span class="string">env.THEME_BRANCH</span> <span class="string">&#125;&#125;</span></span><br><span class="line">          <span class="attr">path:</span> <span class="string">themes/hexo-theme-butterfly</span> <span class="comment"># 这里指定了拉取之后存放的路径</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 安装node.js, 配置node环境</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Use</span> <span class="string">Node.js</span> <span class="string">$&#123;&#123;</span> <span class="string">matrix.node_version</span> <span class="string">&#125;&#125;</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">actions/setup-node@v4</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">node-version:</span> <span class="string">$&#123;&#123;</span> <span class="string">matrix.node_version</span> <span class="string">&#125;&#125;</span></span><br><span class="line"></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Configuration</span> <span class="string">environment</span></span><br><span class="line">        <span class="attr">env:</span></span><br><span class="line">          <span class="attr">HEXO_DEPLOY_PRI:</span> <span class="string">$&#123;&#123;secrets.HEXO_DEPLOY_PRI&#125;&#125;</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">|</span></span><br><span class="line"><span class="string">          sudo timedatectl set-timezone &quot;Asia/Shanghai&quot;</span></span><br><span class="line"><span class="string">          mkdir -p ~/.ssh/</span></span><br><span class="line"><span class="string">          echo &quot;$HEXO_DEPLOY_PRI&quot; &gt; ~/.ssh/id_rsa</span></span><br><span class="line"><span class="string">          chmod 600 ~/.ssh/id_rsa</span></span><br><span class="line"><span class="string">          # 避免访问github出现问题, 添加到known_hosts</span></span><br><span class="line"><span class="string">          ssh-keyscan github.com &gt;&gt; ~/.ssh/known_hosts</span></span><br><span class="line"><span class="string">          ssh-keyscan 121.36.61.23 &gt;&gt; ~/.ssh/known_hosts</span></span><br><span class="line"><span class="string">          git config --global user.name $GIT_USER</span></span><br><span class="line"><span class="string">          git config --global user.email $GIT_EMAIL</span></span><br><span class="line"><span class="string">          # cp _config.butterfly.yml themes/hexo-theme-butterfly/_config.yml</span></span><br><span class="line"><span class="string"></span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Install</span> <span class="string">dependencies</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">|</span></span><br><span class="line"><span class="string">          npm install</span></span><br><span class="line"><span class="string"></span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Deploy</span> <span class="string">hexo</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">|</span></span><br><span class="line"><span class="string">          npm run build</span></span><br><span class="line"><span class="string">          npm run deploy</span></span><br><span class="line"><span class="string"></span></span><br><span class="line">      <span class="comment"># 推送到远端服务器</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">rsync</span> <span class="string">deployments</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">burnett01/rsync-deployments@4.1</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="comment"># 这里是 rsync 的参数 switches: -avzh --delete --exclude=&quot;&quot; --include=&quot;&quot; --filter=&quot;&quot;</span></span><br><span class="line">          <span class="attr">switches:</span> <span class="string">-avzh</span> <span class="string">--delete</span></span><br><span class="line">          <span class="attr">path:</span> <span class="string">.deploy_git/</span>  <span class="comment"># action容器工作目录内的路径地址</span></span><br><span class="line">          <span class="attr">remote_path:</span> <span class="string">/var/www/myblog</span> <span class="comment"># 远端服务器的路径地址</span></span><br><span class="line">          <span class="attr">remote_host:</span> <span class="number">121.36</span><span class="number">.61</span><span class="number">.23</span> <span class="comment"># 服务器 ip</span></span><br><span class="line">          <span class="attr">remote_port:</span> <span class="number">22</span></span><br><span class="line">          <span class="attr">remote_user:</span> <span class="string">root</span></span><br><span class="line">          <span class="attr">remote_key:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.SSH_PRIVATE_KEY</span> <span class="string">&#125;&#125;</span> <span class="comment"># 一定配置密钥登录</span></span><br></pre></td></tr></table></figure>
+<p>这段代码是一个 GitHub Actions 工作流程，主要用于配置环境并设置相关参数，包括：</p>
+<ul>
+<li><p><strong>使用 Node.js 版本：</strong></p>
+<ul>
+<li>使用 <code>actions/setup-node</code> 动作来设置 Node.js 环境。</li>
+<li><code>$&#123;&#123; matrix.node_version &#125;&#125;</code> 是一个矩阵构建中定义的变量，用于指定要使用的 Node.js 版本。</li>
+</ul>
+</li>
+<li><p><strong>配置环境变量：</strong></p>
+<ul>
+<li>使用 <code>env</code> 关键字设置环境变量。</li>
+<li><code>HEXO_DEPLOY_PRI</code> 是一个环境变量，其值来自 GitHub Secrets 中的 <code>HEXO_DEPLOY_PRI</code> 密钥。</li>
+</ul>
+</li>
+<li><p><strong>运行命令：</strong></p>
+<ul>
+<li>使用 <code>run</code> 关键字执行一系列命令。</li>
+<li><code>sudo timedatectl set-timezone &quot;Asia/Shanghai&quot;</code> 设置系统时区为亚洲/上海时区。</li>
+<li><code>mkdir -p ~/.ssh/</code> 创建 SSH 目录，用于存放 SSH 密钥和相关文件。</li>
+<li><code>echo &quot;$HEXO_DEPLOY_PRI&quot; &gt; ~/.ssh/id_rsa</code> 将名为 <code>HEXO_DEPLOY_PRI</code> 的密钥内容写入 <code>~/.ssh/id_rsa</code> 文件中。</li>
+<li><code>chmod 600 ~/.ssh/id_rsa</code> 修改 <code>~/.ssh/id_rsa</code> 文件的权限，确保只有当前用户可以读写该文件。</li>
+<li><code>ssh-keyscan github.com &gt;&gt; ~/.ssh/known_hosts</code> 和 <code>ssh-keyscan 121.36.61.23 &gt;&gt; ~/.ssh/known_hosts</code> 用于将远程主机的公钥添加到 <code>~/.ssh/known_hosts</code> 文件中，以避免 SSH 连接时的警告或确认提示。</li>
+<li><code>git config --global user.name $GIT_USER</code> 和 <code>git config --global user.email $GIT_EMAIL</code> 用于设置全局 Git 用户名和邮箱。</li>
+</ul>
+</li>
+<li><p><strong>注意事项</strong></p>
+<ul>
+<li><p>确保在服务器上生成一个密钥对, 将<strong>公钥</strong>添加到 <code>github SSH</code> 文件中, <strong>私钥</strong>添加到 <code>test\test_push.git</code> 仓库的 <code>secret</code> 变量中, 这里将<strong>私钥</strong>命名为 <code>SSH_PRIVATE_KEY</code></p>
+<p><img src="https://s2.loli.net/2024/03/16/mQD6MLj2Bpw8iPK.png" alt="image-20240316004003064"></p>
+<p><img src="https://s2.loli.net/2024/03/16/AjdU4yEZopSkvIc.png" alt="image-20240316092137214"></p>
+</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>hexo</tag>
+        <tag>nginx</tag>
+        <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java 语法学习</title>
+    <url>/2024/03/23/80bdef1f.html</url>
+    <content><![CDATA[<h1 id="输入输出"><a href="#输入输出" class="headerlink" title="输入输出"></a>输入输出</h1><ul>
+<li><p><code>Scanner</code>, <code>System.out.printf()</code></p>
+</li>
+<li><p><code>BufferedReader</code>, <code>BufferedWriter</code></p>
+<p><strong>注意: </strong><code>BufferedWriter</code> 需要手动刷新缓冲区</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="comment">/*Scanner输入*/</span></span><br><span class="line">        <span class="type">Scanner</span> <span class="variable">sc</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Scanner</span>(System.in);</span><br><span class="line">        <span class="type">String</span> <span class="variable">str</span> <span class="operator">=</span> sc.next();  <span class="comment">// 读入下一个字符串</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">x</span> <span class="operator">=</span> sc.nextInt();  <span class="comment">// 读入下一个整数</span></span><br><span class="line">        <span class="type">float</span> <span class="variable">y</span> <span class="operator">=</span> sc.nextFloat();  <span class="comment">// 读入下一个单精度浮点数</span></span><br><span class="line">        <span class="type">double</span> <span class="variable">z</span> <span class="operator">=</span> sc.nextDouble();  <span class="comment">// 读入下一个双精度浮点数</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">line</span> <span class="operator">=</span> sc.nextLine();  <span class="comment">// 读入下一行</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">/*BufferedReader输入*/</span></span><br><span class="line">        <span class="type">BufferedReader</span> <span class="variable">br</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BufferedReader</span>(<span class="keyword">new</span> <span class="title class_">InputStreamReader</span>(System.in));</span><br><span class="line">        <span class="type">String</span> <span class="variable">str</span> <span class="operator">=</span> br.readLine();</span><br><span class="line">        System.out.println(str);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">/*printf()输出*/</span></span><br><span class="line">        System.out.println(<span class="number">123</span>);  <span class="comment">// 输出整数 + 换行</span></span><br><span class="line">        System.out.println(<span class="string">&quot;Hello World&quot;</span>);  <span class="comment">// 输出字符串 + 换行</span></span><br><span class="line">        System.out.print(<span class="number">123</span>);  <span class="comment">// 输出整数</span></span><br><span class="line">        System.out.print(<span class="string">&quot;yxc\n&quot;</span>);  <span class="comment">// 输出字符串</span></span><br><span class="line">        System.out.printf(<span class="string">&quot;%04d %.2f\n&quot;</span>, <span class="number">4</span>, <span class="number">123.456D</span>);  <span class="comment">// 格式化输出，float与double都用%f输出</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">/*BufferedWriter输出*/</span></span><br><span class="line">        <span class="type">BufferedWriter</span> <span class="variable">bw</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BufferedWriter</span>(<span class="keyword">new</span> <span class="title class_">OutputStreamWriter</span>(System.out));</span><br><span class="line">        bw.write(<span class="string">&quot;Hello World\n&quot;</span>);</span><br><span class="line">        bw.flush();  <span class="comment">// 需要手动刷新缓冲区</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h1><h2 id="一维数组"><a href="#一维数组" class="headerlink" title="一维数组"></a>一维数组</h2><ul>
+<li>定义</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span>[] a = <span class="keyword">new</span> <span class="title class_">int</span>[<span class="number">10</span>];</span><br><span class="line"><span class="type">int</span>[] b; <span class="comment">// 未初始化，需要在后续代码中为其分配内存空间</span></span><br><span class="line"><span class="comment">// 上面两行代码可以简写为如下代码</span></span><br><span class="line"><span class="type">int</span>[] a = <span class="keyword">new</span> <span class="title class_">int</span>[<span class="number">10</span>], b;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>初始化</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span>[] a = &#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>&#125;;        <span class="comment">// 含有3个元素的数组，元素分别是0, 1, 2</span></span><br><span class="line"><span class="type">int</span>[] b = <span class="keyword">new</span> <span class="title class_">int</span>[<span class="number">3</span>];       <span class="comment">// 含有3个元素的数组，元素的值均为0</span></span><br><span class="line"><span class="type">char</span>[] d = &#123;<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>&#125;; <span class="comment">// 字符数组的初始化, 字符数组默认初始化为 \u0000 (不可见字符)</span></span><br></pre></td></tr></table></figure>
+<h2 id="多维数组"><a href="#多维数组" class="headerlink" title="多维数组"></a>多维数组</h2><ul>
+<li>定义</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span>[][] a = <span class="keyword">new</span> <span class="title class_">int</span>[<span class="number">3</span>][<span class="number">4</span>]; <span class="comment">// 大小为3的数组，每个元素是含有4个整数的数组。</span></span><br><span class="line"><span class="type">int</span>[][][] b = <span class="keyword">new</span> <span class="title class_">int</span>[<span class="number">10</span>][<span class="number">20</span>][<span class="number">30</span>]; <span class="comment">// 将所有元素的初值为0</span></span><br><span class="line"><span class="comment">// 大小为10的数组，它的每个元素是含有20个数组的数组</span></span><br><span class="line"><span class="comment">// 这些数组的元素是含有30个整数的数组</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>初始化</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span>[][] a = &#123;           <span class="comment">// 三个元素，每个元素都是大小为4的数组</span></span><br><span class="line">            &#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;,       <span class="comment">// 第1行的初始值</span></span><br><span class="line">            &#123;<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>&#125;,       <span class="comment">// 第2行的初始值</span></span><br><span class="line">            &#123;<span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>&#125;      <span class="comment">// 第3行的初始值</span></span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">4</span>; i ++ )  <span class="comment">// 将第一行全部变成0</span></span><br><span class="line">    a[<span class="number">0</span>][i] = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">3</span>; i ++ ) &#123;  <span class="comment">// 输出二维数组</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt; <span class="number">4</span>; j ++ ) &#123;</span><br><span class="line">        System.out.printf(<span class="string">&quot;%d &quot;</span>, a[i][j]);</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="常用-API"><a href="#常用-API" class="headerlink" title="常用 API"></a>常用 <strong>API</strong></h2><ul>
+<li>属性: <code>length</code>, 返回数组长度</li>
+<li><code>Arrays.sort()</code>, 数组排序</li>
+<li><code>Arrays.fill(int[] a, int val)</code>, 填充数组</li>
+<li><code>Arrays.toString</code>, 将数组转为字符串</li>
+<li><code>Arrays.deepToString</code>, 将多维数组转为字符串</li>
+<li>数组不可扩容</li>
+<li>使用 <code>Arrays</code> 需要 <code>import java.util.Arrays</code></li>
+</ul>
+<h1 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h1><ul>
+<li><p>每个常用字符都对应一个 <code>-128 ~ 127</code> 的数字，二者之间可以相互转化。注意：目前负数没有与之对应的字符。</p>
+</li>
+<li><p>常用ASCII值：<code>&#39;A&#39;- &#39;Z&#39;</code> 是65 ~ 90，<code>&#39;a&#39; - &#39;z&#39;</code> 是 <code>97 - 122</code>，<code>0 - 9</code> 是 </p>
+<p><code>48 - 57</code>。<br>字符可以参与运算，运算时会将其当做整数</p>
+</li>
+</ul>
+<h2 id="String类"><a href="#String类" class="headerlink" title="String类"></a>String类</h2><ul>
+<li>初始化</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">a</span> <span class="operator">=</span> <span class="string">&quot;Hello World&quot;</span>;</span><br><span class="line"><span class="type">String</span> <span class="variable">b</span> <span class="operator">=</span> <span class="string">&quot;My name is &quot;</span>;</span><br><span class="line"><span class="type">String</span> <span class="variable">x</span> <span class="operator">=</span> b;  <span class="comment">// 存储到了相同地址</span></span><br><span class="line"><span class="type">String</span> <span class="variable">c</span> <span class="operator">=</span> b + <span class="string">&quot;yxc&quot;</span>;  <span class="comment">// String可以通过加号拼接</span></span><br><span class="line"><span class="type">String</span> <span class="variable">d</span> <span class="operator">=</span> <span class="string">&quot;My age is &quot;</span> + <span class="number">18</span>;  <span class="comment">// int会被隐式转化成字符串&quot;18&quot;</span></span><br><span class="line"><span class="type">String</span> <span class="variable">str</span> <span class="operator">=</span> String.format(<span class="string">&quot;My age is %d&quot;</span>, <span class="number">18</span>);  <span class="comment">// 格式化字符串，类似于C++中的sprintf</span></span><br><span class="line"><span class="type">String</span> <span class="variable">money_str</span> <span class="operator">=</span> <span class="string">&quot;123.45&quot;</span>;</span><br><span class="line"><span class="type">double</span> <span class="variable">money</span> <span class="operator">=</span> Double.parseDouble(money_str);  <span class="comment">// String转double</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在Java中，String 类是不可变的，这意味着一旦创建了一个字符串对象，它的内容就不能被修改。执行 <code>a += &quot;World&quot;;</code> 这样的字符串拼接操作时，实际上会创建一个新的字符串对象，其中包含了原始字符串 “Hello “ 和新字符串 “World” 的连接结果。</p>
+</blockquote>
+<ul>
+<li>访问</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">str</span> <span class="operator">=</span> <span class="string">&quot;Hello World&quot;</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; str.length(); i ++ ) &#123;</span><br><span class="line">    System.out.print(str.charAt(i));  <span class="comment">// 只能读取，不能写入</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>常用 API</li>
+</ul>
+<ol>
+<li><p><code>length()</code>：返回长度</p>
+</li>
+<li><p><code>split(String regex)</code>：分割字符串</p>
+</li>
+<li><p><code>indexOf(char c)</code>、<code>indexOf(String str)</code>、<code>lastIndexOf(char c)</code>、<code>lastIndexOf(String str)</code>：查找，找不到返回 <code>-1</code></p>
+</li>
+<li><p><code>equals()</code>：判断两个字符串是否相等，注意不能直接用 <code>==</code></p>
+</li>
+<li><p><code>compareTo()</code>：判断两个字符串的字典序大小，负数表示小于，<code>0</code> 表示相等，正数表示大于</p>
+</li>
+<li><p><code>startsWith()</code>：判断是否以某个前缀开头</p>
+</li>
+<li><p><code>endsWith()</code>：判断是否以某个后缀结尾</p>
+</li>
+<li><p><code>trim()</code>：去掉首尾的空白字符</p>
+</li>
+<li><p><code>toLowerCase()</code>：全部用小写字符</p>
+</li>
+<li><p><code>toUpperCase()</code>：全部用大写字符</p>
+</li>
+<li><p><code>replace(char oldChar, char newChar)</code>：替换字符</p>
+</li>
+<li><p><code>replace(String oldRegex, String newRegex)</code>：替换字符串</p>
+</li>
+<li><p><code>substring(int beginIndex, int endIndex)</code>：</p>
+<p>返回 <code>[beginIndex, endIndex)</code> 中的子串</p>
+</li>
+<li><p><code>toCharArray()</code>：将字符串转化成字符数组</p>
+</li>
+</ol>
+<ul>
+<li>输入输出</li>
+</ul>
+<ol>
+<li><code>Scanner.next()</code></li>
+<li><code>Scanner.nextLine()</code></li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">Scanner</span> <span class="variable">sc</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Scanner</span>(System.in);</span><br><span class="line">        <span class="type">String</span> <span class="variable">str1</span> <span class="operator">=</span> sc.next();  <span class="comment">// 输入字符串，遇到空格、回车等空白字符时停止输入</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">str2</span> <span class="operator">=</span> sc.nextLine();  <span class="comment">// 输入一整行字符串，遇到空格不会停止输入，遇到回车才会停止</span></span><br><span class="line"></span><br><span class="line">        System.out.println(str1);  <span class="comment">// 可以直接输出</span></span><br><span class="line">        System.out.printf(<span class="string">&quot;%s\n&quot;</span>, str2);  <span class="comment">// 也可以格式化输出，用 %s 表示字符串</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>StringBuilder</code>, <code>StringBuffer</code></li>
+</ul>
+<ol>
+<li><p><code>String</code> 无法修改, 如果想要修改字符串, 可以使用 <code>StringBuilder</code>, <code>StringBuffer</code></p>
+</li>
+<li><p><code>StringBuffer</code> 线程安全，速度较慢；<code>StringBuilder</code> 线程不安全，速度较快。</p>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">StringBuilder</span> <span class="variable">sb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>(<span class="string">&quot;Hello &quot;</span>);  <span class="comment">// 初始化</span></span><br><span class="line">sb.append(<span class="string">&quot;World&quot;</span>);  <span class="comment">// 拼接字符串</span></span><br><span class="line">System.out.println(sb);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; sb.length(); i ++ ) &#123;</span><br><span class="line">    sb.setCharAt(i, (<span class="type">char</span>)(sb.charAt(i) + <span class="number">1</span>));  <span class="comment">// 读取和写入字符</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">System.out.println(sb);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>常使用  <code>reverse()</code> 翻转字符串</p>
+</blockquote>
+<h1 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h1><ul>
+<li>参数传递</li>
+</ul>
+<ol>
+<li>值传递</li>
+<li>引用传递</li>
+</ol>
+<ul>
+<li><p>值传递</p>
+<p>八大基本数据类型和 <code>String</code> 类型等采用值传递。</p>
+<p><strong>将实参的初始值拷贝给形参</strong>。此时，对形参的改动不会影响实参的初始值。</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">f</span><span class="params">(<span class="type">int</span> x)</span> &#123;</span><br><span class="line">        x = <span class="number">5</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">x</span> <span class="operator">=</span> <span class="number">10</span>;</span><br><span class="line">        f(x);</span><br><span class="line">        System.out.println(x);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>引用传递</p>
+<p>除 <code>String</code> 以外的数据类型的对象，例如数组、<code>StringBuilder</code> 等采用引用传递。</p>
+<p>将实参的引用（<strong>地址</strong>）传给形参，通过引用找到变量的真正地址，然后对地址中的值修改。所以此时对形参的修改会影响实参的初始值。</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">f1</span><span class="params">(<span class="type">int</span>[] a)</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>, j = a.length - <span class="number">1</span>; i &lt; j; i ++, j -- ) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">t</span> <span class="operator">=</span> a[i];</span><br><span class="line">            a[i] = a[j];</span><br><span class="line">            a[j] = t;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">f2</span><span class="params">(StringBuilder sb)</span> &#123;</span><br><span class="line">        sb.append(<span class="string">&quot;Hello World&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">int</span>[] a = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;</span><br><span class="line">        f1(a);</span><br><span class="line">        System.out.println(Arrays.toString(a));</span><br><span class="line"></span><br><span class="line">        <span class="type">StringBuilder</span> <span class="variable">sb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>(<span class="string">&quot;&quot;</span>);</span><br><span class="line">        f2(sb);</span><br><span class="line">        System.out.println(sb);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h1><h2 id="类的定义"><a href="#类的定义" class="headerlink" title="类的定义"></a>类的定义</h2><p> 类的定义</p>
+<ul>
+<li><p><code>public</code>: 所有对象均可以访问</p>
+</li>
+<li><p><code>private</code>: 只有本类内部可以访问</p>
+</li>
+<li><p><code>protected</code>：同一个包或者子类中可以访问</p>
+</li>
+<li><p>不添加修饰符：在同一个包中可以访问</p>
+</li>
+<li><p>静态（带static修饰符）成员变量/函数与普通成员变量/函数的区别：</p>
+<p>所有static成员变量/函数在类中只有一份，被所有类的对象共享；<br>所有普通成员变量/函数在类的每个对象中都有独立的一份；</p>
+</li>
+</ul>
+<blockquote>
+<p>静态函数中只能调用静态函数/变量；普通函数中既可以调用普通函数/变量，也可以调用静态函数/变量。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Point</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> x;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> y;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Point</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.x = x;</span><br><span class="line">        <span class="built_in">this</span>.y = y;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setX</span><span class="params">(<span class="type">int</span> x)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.x = x;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setY</span><span class="params">(<span class="type">int</span> y)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.y = y;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getX</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> x;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getY</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> y;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">toString</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> String.format(<span class="string">&quot;(%d, %d)&quot;</span>, x, y);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="类的继承"><a href="#类的继承" class="headerlink" title="类的继承"></a>类的继承</h2><p>每个类只能继承一个父类</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ColorPoint</span> <span class="keyword">extends</span> <span class="title class_">Point</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> String color;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">ColorPoint</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y, String color)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>(x, y);</span><br><span class="line">        <span class="built_in">this</span>.color = color;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setColor</span><span class="params">(String color)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.color = color;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">toString</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> String.format(<span class="string">&quot;(%d, %d, %s)&quot;</span>, <span class="built_in">super</span>.getX(), <span class="built_in">super</span>.getY(), <span class="built_in">this</span>.color);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">Point</span> <span class="variable">point</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Point</span>(<span class="number">3</span>, <span class="number">4</span>);</span><br><span class="line">        <span class="type">Point</span> <span class="variable">colorPoint</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ColorPoint</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="string">&quot;red&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 多态，同一个类的实例，调用相同的函数，运行结果不同</span></span><br><span class="line">        System.out.println(point.toString());</span><br><span class="line">        System.out.println(colorPoint.toString());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="接口-1"><a href="#接口-1" class="headerlink" title="接口"></a>接口</h2><p><code>interface</code> 与 <code>class</code> 类似。主要用来定义类中所需包含的函数。</p>
+<p><strong>接口也可以继承其他接口，一个类可以实现多个接口。</strong></p>
+<ul>
+<li>定义</li>
+</ul>
+<p>接口不添加修饰符时, 默认为 <code>public</code></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">Role</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">greet</span><span class="params">()</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">move</span><span class="params">()</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getSpeed</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>继承</li>
+</ul>
+<p>接口可以继承多个接口</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">Hero</span> <span class="keyword">extends</span> <span class="title class_">Role</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">attack</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>实现</li>
+</ul>
+<p>每个类可以实现多个接口</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Zeus</span> <span class="keyword">implements</span> <span class="title class_">Hero</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> <span class="string">&quot;Zeus&quot;</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">attack</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(name + <span class="string">&quot;: Attack!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">greet</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(name + <span class="string">&quot;: Hi!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">move</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(name + <span class="string">&quot;: Move!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getSpeed</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">10</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>多态</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Athena</span> <span class="keyword">implements</span> <span class="title class_">Hero</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> <span class="string">&quot;Athena&quot;</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">attack</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(name + <span class="string">&quot;: Attack!!!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">greet</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(name + <span class="string">&quot;: Hi!!!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">move</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(name + <span class="string">&quot;: Move!!!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getSpeed</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">10</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        Hero[] heros = &#123;<span class="keyword">new</span> <span class="title class_">Zeus</span>(), <span class="keyword">new</span> <span class="title class_">Athena</span>()&#125;;</span><br><span class="line">        <span class="keyword">for</span> (Hero hero: heros) &#123;</span><br><span class="line">            hero.greet();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>c++ 语法学习</title>
+    <url>/2024/03/23/ac3a716d.html</url>
+    <content><![CDATA[<h1 id="重载"><a href="#重载" class="headerlink" title="重载"></a>重载</h1><h2 id="一般重载"><a href="#一般重载" class="headerlink" title="一般重载"></a>一般重载</h2><p>在C++中可以通过<strong>重载</strong>运算符来改变已有运算符的行为，使其适用于自定义类型。以下是一个简单的例子，演示如何重载加法运算符（+）来实现两个自定义对象的相加：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyNumber</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> num;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">MyNumber</span>(<span class="type">int</span> n) : <span class="built_in">num</span>(n) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 重载加法运算符</span></span><br><span class="line">    MyNumber <span class="keyword">operator</span>+(<span class="type">const</span> MyNumber&amp; other) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">MyNumber</span>(<span class="keyword">this</span>-&gt;num + other.num);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取数字的方法</span></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">getNum</span><span class="params">()</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> num;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="function">MyNumber <span class="title">num1</span><span class="params">(<span class="number">5</span>)</span></span>;</span><br><span class="line">    <span class="function">MyNumber <span class="title">num2</span><span class="params">(<span class="number">10</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用重载的加法运算符</span></span><br><span class="line">    MyNumber sum = num1 + num2;</span><br><span class="line"></span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Sum: &quot;</span> &lt;&lt; sum.<span class="built_in">getNum</span>() &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在这个例子中，<code>MyNumber</code> 类重载了加法运算符 <code>+</code>。在 <code>main()</code> 函数中，我们创建了两个 <code>MyNumber</code> 对象 <code>num1</code> 和 <code>num2</code>，然后使用重载的加法运算符将它们相加，并将结果赋给 <code>sum</code>。最后，我们打印出 <code>sum</code> 对象中存储的值。</p>
+<p>减法运算符 <code>-</code>、乘法运算符 <code>*</code> 等类似，<strong>自增运算符比较特殊</strong>。重载运算符时需要考虑类型的合理性和操作的语义，以确保代码的可读性和正确性。</p>
+<h2 id="自增运算符"><a href="#自增运算符" class="headerlink" title="自增运算符"></a>自增运算符</h2><p>C++ 中的自增运算符 <code>++</code> 的重载有一些特殊之处。在 C++ 中，自增运算符可以以前缀形式（<code>++var</code>）或后缀形式（<code>var++</code>）使用，并且可以重载这两种形式。</p>
+<blockquote>
+<p>重载前缀形式的自增运算符时，通常返回递增后的对象的引用（或指针）。而重载后缀形式时，则要返回递增前的对象的副本，通常通过一个额外的参数来区分前缀和后缀形式的调用。</p>
+</blockquote>
+<p>以下是一个简单的示例，演示了如何重载前缀和后缀形式的自增运算符：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyNumber</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> num;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">MyNumber</span>(<span class="type">int</span> n) : <span class="built_in">num</span>(n) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 重载前缀形式的自增运算符</span></span><br><span class="line">    MyNumber&amp; <span class="keyword">operator</span>++() &#123;</span><br><span class="line">        ++num;</span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 重载后缀形式的自增运算符</span></span><br><span class="line">    MyNumber <span class="keyword">operator</span>++(<span class="type">int</span>) &#123;</span><br><span class="line">        MyNumber temp = *<span class="keyword">this</span>;</span><br><span class="line">        ++num;</span><br><span class="line">        <span class="keyword">return</span> temp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取数字的方法</span></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">getNum</span><span class="params">()</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> num;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="function">MyNumber <span class="title">num</span><span class="params">(<span class="number">5</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用前缀形式的自增运算符</span></span><br><span class="line">    ++num;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;After prefix increment: &quot;</span> &lt;&lt; num.<span class="built_in">getNum</span>() &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用后缀形式的自增运算符</span></span><br><span class="line">    MyNumber num2 = num++;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;After postfix increment: &quot;</span> &lt;&lt; num2.<span class="built_in">getNum</span>() &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>MyNumber</code> 类重载了前缀和后缀形式的自增运算符 <code>++</code>。在 <code>main()</code> 函数中，我们分别使用了前缀和后缀形式的自增运算符，并打印了结果。</p>
+<h1 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h1><h2 id="初始化列表"><a href="#初始化列表" class="headerlink" title="初始化列表"></a>初始化列表</h2><p>初始化列表是一种用于在对象构造过程中初始化成员变量的特性。它<strong>提供了一种更加有效和灵活的初始化方式，特别是对于类中的成员变量或者继承关系中的基类构造函数。</strong></p>
+<blockquote>
+<p>在传统的构造函数中，成员变量的初始化通常是在构造函数的函数体中进行的。而使用初始化列表，则可以在构造函数的初始化列表中直接初始化成员变量，而不需要在构造函数的函数体中再次赋值。</p>
+</blockquote>
+<p>初始化列表的语法是在构造函数的参数列表后面使用冒号，并列出成员变量及其初始化值，以逗号分隔。例如：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> x;</span><br><span class="line">    <span class="type">int</span> y;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">// 使用初始化列表初始化成员变量</span></span><br><span class="line">    <span class="built_in">MyClass</span>(<span class="type">int</span> a, <span class="type">int</span> b) : <span class="built_in">x</span>(a), <span class="built_in">y</span>(b) &#123;</span><br><span class="line">        <span class="comment">// 构造函数的函数体</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>在上面的示例中，构造函数 <code>MyClass(int a, int b)</code> 使用了初始化列表来初始化成员变量 <code>x</code> 和 <code>y</code>。</p>
+<p><strong>优点</strong></p>
+<ol>
+<li><strong>效率更高：</strong> 使用初始化列表直接在对象构造时初始化成员变量，避免了先构造对象再赋值的过程，提高了效率。</li>
+<li><strong>const 成员变量和引用类型成员变量必须使用初始化列表：</strong> 在初始化列表中初始化 const 成员变量和引用类型成员变量是唯一可行的方式。</li>
+<li><strong>初始化顺序：</strong> 成员变量在初始化列表中的顺序决定了初始化的顺序，与它们在类中声明的顺序无关。这有助于避免一些潜在的问题。</li>
+</ol>
+<p>总之，C++ 的初始化列表是一种强大的特性，可以帮助你更优雅地初始化类的成员变量，并提高代码的效率和可读性。</p>
+<h2 id="拷贝构造"><a href="#拷贝构造" class="headerlink" title="拷贝构造"></a>拷贝构造</h2><h3 id="浅拷贝"><a href="#浅拷贝" class="headerlink" title="浅拷贝"></a>浅拷贝</h3><p>当你没有显式地定义拷贝构造函数时，编译器会自动生成一个默认的拷贝构造函数。让我们通过一个简单的示例来演示这一点：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> x;</span><br><span class="line">    <span class="type">int</span>* ptr;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">// 构造函数</span></span><br><span class="line">    <span class="built_in">MyClass</span>(<span class="type">int</span> val) : <span class="built_in">x</span>(val), <span class="built_in">ptr</span>(<span class="keyword">new</span> <span class="built_in">int</span>(val)) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 成员函数，打印对象的值</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">print</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;x: &quot;</span> &lt;&lt; x &lt;&lt; <span class="string">&quot;, ptr: &quot;</span> &lt;&lt; *ptr &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 创建一个对象并打印其值</span></span><br><span class="line">    <span class="function">MyClass <span class="title">obj1</span><span class="params">(<span class="number">5</span>)</span></span>;</span><br><span class="line">    obj1.<span class="built_in">print</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过另一个对象初始化一个新对象，并打印其值</span></span><br><span class="line">    MyClass obj2 = obj1;</span><br><span class="line">    obj2.<span class="built_in">print</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>示例中，<code>MyClass</code> 类有两个成员变量：一个是整型 <code>x</code>，另一个是指向整型的指    针 <code>ptr</code>。在构造函数中，我们分别为 <code>x</code> 和 <code>ptr</code> 分配了内存。</p>
+<p>即使我们没有显式地定义拷贝构造函数，编译器会自动生成一个默认的拷贝构造函数，它会逐个成员地复制值。在这个示例中，<code>ptr</code> 成员是一个指针，编译器会复制指针的值，使得 <code>obj1</code> 和 <code>obj2</code> 的 <code>ptr</code> 指向相同的内存地址，==这可能会导致浅拷贝问题。==</p>
+<h3 id="深拷贝"><a href="#深拷贝" class="headerlink" title="深拷贝"></a>深拷贝</h3><blockquote>
+<p>要解决浅拷贝问题，需要实现一个自定义的拷贝构造函数，以确保对象之间的深度拷贝。在拷贝构造函数中，你需要手动分配新的内存空间，并将原始对象的数据复制到新分配的内存中，而不是简单地复制指针。</p>
+</blockquote>
+<p>修改浅拷贝的示例，并添加一个自定义的拷贝构造函数来解决浅拷贝问题：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> x;</span><br><span class="line">    <span class="type">int</span>* ptr;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">// 构造函数</span></span><br><span class="line">    <span class="built_in">MyClass</span>(<span class="type">int</span> val) : <span class="built_in">x</span>(val), <span class="built_in">ptr</span>(<span class="keyword">new</span> <span class="built_in">int</span>(val)) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 自定义拷贝构造函数</span></span><br><span class="line">    <span class="built_in">MyClass</span>(<span class="type">const</span> MyClass&amp; other) : <span class="built_in">x</span>(other.x), <span class="built_in">ptr</span>(<span class="keyword">new</span> <span class="built_in">int</span>(*other.ptr)) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 析构函数</span></span><br><span class="line">    ~<span class="built_in">MyClass</span>() &#123;</span><br><span class="line">        <span class="keyword">delete</span> ptr; <span class="comment">// 释放指针指向的内存</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 成员函数，打印对象的值</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">print</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;x: &quot;</span> &lt;&lt; x &lt;&lt; <span class="string">&quot;, ptr: &quot;</span> &lt;&lt; *ptr &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 创建一个对象并打印其值</span></span><br><span class="line">    <span class="function">MyClass <span class="title">obj1</span><span class="params">(<span class="number">5</span>)</span></span>;</span><br><span class="line">    obj1.<span class="built_in">print</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过另一个对象初始化一个新对象，并打印其值</span></span><br><span class="line">    MyClass obj2 = obj1;</span><br><span class="line">    obj2.<span class="built_in">print</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在这个示例中，我们添加了一个自定义的拷贝构造函数 <code>MyClass(const MyClass&amp; other)</code>。在这个函数中，我们手动分配了新的内存空间，并将 <code>other</code> 对象的数据复制到新分配的内存中。这样做就确保了 <code>obj1</code> 和 <code>obj2</code> 的 <code>ptr</code> 指向的是不同的内存地址，从而避免了浅拷贝问题。</p>
+<p><strong>注意</strong></p>
+<p>在自定义拷贝构造函数中，我们进行了深度拷贝，复制了 <code>ptr</code> 指向的数据。并且在<strong>析构函数</strong>中，我们释放了 <code>ptr</code> 指向的内存。这样做可以确保资源的正确管理，避免内存泄漏。</p>
+]]></content>
+      <tags>
+        <tag>c++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>多路归并</title>
+    <url>/2024/03/23/d14b420f.html</url>
+    <content><![CDATA[<ul>
+<li><a href="https://www.acwing.com/problem/content/4659/">例题1, 技能升级</a></li>
+</ul>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p><strong>多路合并 + 二分</strong></p>
+<blockquote>
+<p>多路等差数列:<br>10 5<br>9 7 5 3 1<br>8 7 6 5 4 3 2 1</p>
+<p>从多个数列(这里是等差数列)中, 找到前 <code>m</code> 大的数, 求和输出答案</p>
+<p>运用二分, 枚举 <code>mid</code>, 并用 <code>check(int mid)</code> 函数判断, 具体过程如下, 对于每个等差数列, 根据 <code>mid</code> 判断其有多少个项大于 <code>mid</code>, 累计数量到 <code>cnt</code>, 循环完成 <code>n</code> 个等差数列后, 判断 <code>cnt &gt;= m</code>,<br>最后使用 <code>ans</code> 累计这些前 <code>m</code> 大的数的和, 注意这里的等差数列中可能包含多个等于 <code>mid</code> 的项, 多出来的数量为 <code>cnt − m</code> 个</p>
+<p><code>ans − (cnt − m) ∗ l</code> 即是最终答案</p>
+</blockquote>
+<p>😥😥😥, 猪脑过载, </p>
+<ul>
+<li><a href="https://www.acwing.com/problem/content/description/58/">例题2</a></li>
+</ul>
+<h1 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h1><p><strong>多路合并</strong></p>
+<blockquote>
+<p>创建两个队列, 分别存放包含 2, 3, 5这些质因子的数</p>
+<p>一开始, <code>a</code> 队列只有 2 一个数, <code>b</code> 队列只有 3 一个数, <code>c</code> 队列只有 5 一个数</p>
+<p>操作步骤为, 每次从 <code>a, b, c</code> 三个队列中取出队头最小的那个数记为 <code>curr</code>, 同时将 <code>curr * 2</code> 放入 <code>a</code> 队列, <code>curr * 3</code> 放入 <code>b</code> 队列, <code>curr * 5</code> 放入 <code>c</code> 队列. 这样子每个</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>算法学习</category>
+      </categories>
+      <tags>
+        <tag>多路归并</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>排序算法</title>
+    <url>/2024/03/23/735e5788.html</url>
+    <content><![CDATA[<h1 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h1><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">1e5</span> + <span class="number">10</span>;</span><br><span class="line"><span class="type">int</span> a[N], tmp[N], n;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">merge</span><span class="params">(<span class="type">int</span>* a, <span class="type">int</span> l, <span class="type">int</span> r)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (l &gt;= r) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> mid = (l + r) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">    cnt += <span class="built_in">merge</span>(a, l, mid);</span><br><span class="line">    cnt += cnt + <span class="built_in">merge</span>(a, mid + <span class="number">1</span>, r);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> i = l, j = mid + <span class="number">1</span>, k = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (i &lt;= mid &amp;&amp; j &lt;= r) &#123;</span><br><span class="line">        <span class="keyword">if</span> (a[i] &lt;= a[j]) tmp[k++] = a[i ++];</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            cnt += mid - i + <span class="number">1</span>;</span><br><span class="line">            tmp[k++] = a[j ++];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (i &lt;= mid) tmp[k++] = a[i ++];</span><br><span class="line">    <span class="keyword">while</span> (j &lt;= r) tmp[k++] = a[j ++];</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; k; i++)</span><br><span class="line">        a[l + i] = tmp[i];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> cnt;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">        cin &gt;&gt; a[i];</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> ans = <span class="built_in">merge</span>(a, <span class="number">1</span>, n);</span><br><span class="line">    cout &lt;&lt; ans &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>结论：逆序对的数量 $=$ 使得数组升序时相邻数组元素的最小交换次数, </li>
+</ul>
+<p><strong>证明：</strong></p>
+<blockquote>
+<p>交换数组两个相邻的元素 <code>a[i]</code>, <code>a[i + 1]</code>, 若二者不相等, 那么对数组的逆序对数量的影响为 1, <code>a[i] &gt; a[i + 1]</code> 时逆序对数目减一, 又因为升序数组的逆序对数目为 0, 可知至少交换 k 次相邻元素可使得数组变成升序</p>
+<p>又因为数组不为升序时, 必定存在 <code>a[i] &gt; a[i + 1]</code>, 否则数组就是升序了🤪</p>
+<p>显然, 每次交换都可以找到一个位置存在 <code>a[i] &gt; a[i + 1]</code>, 从而逆序对数目减一, 所以结论成立</p>
+</blockquote>
+<h2 id="树状数组求逆序对"><a href="#树状数组求逆序对" class="headerlink" title="树状数组求逆序对"></a>树状数组求逆序对</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>算法学习</category>
+      </categories>
+      <tags>
+        <tag>algorithm</tag>
+        <tag>merge sort</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>树相关算法</title>
+    <url>/2024/03/23/59a207d0.html</url>
+    <content><![CDATA[<h1 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h1><h2 id="根据中后序遍历构造先序遍历"><a href="#根据中后序遍历构造先序遍历" class="headerlink" title="根据中后序遍历构造先序遍历"></a>根据中后序遍历构造先序遍历</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">node</span>&#123;</span><br><span class="line">	<span class="type">char</span> data;</span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">node</span> * lchild, rchild;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">node</span> * <span class="built_in">build</span>(<span class="type">char</span> *post,<span class="type">char</span> *in,<span class="type">int</span> len)</span><br><span class="line">&#123;</span><br><span class="line">    node *b;</span><br><span class="line">    <span class="type">char</span> r,*p;</span><br><span class="line">    <span class="type">int</span> k;</span><br><span class="line">    <span class="keyword">if</span>(le n&lt;= <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    r = *(post + len - <span class="number">1</span>); <span class="comment">// 从后序遍历中最后一项直接得到根节点</span></span><br><span class="line">    b=(node *)<span class="built_in">malloc</span>(<span class="built_in">sizeof</span>(node));</span><br><span class="line">    b-&gt;data = r;</span><br><span class="line">    <span class="keyword">for</span>(p = in;p &lt; in + len;p ++) <span class="comment">// 在中序遍历中找到根节点</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(*p == r)</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    k = p - in; <span class="comment">//计算左子树的包含节点个数</span></span><br><span class="line">    b-&gt;lchild = <span class="built_in">build</span>(post,in,k);</span><br><span class="line">    b-&gt;rchild = <span class="built_in">build</span>(post + k, p + <span class="number">1</span>, len - k - <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>算法学习</category>
+      </categories>
+      <tags>
+        <tag>tree algorithm</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>离散化算法</title>
+    <url>/2024/03/23/5edaa3b.html</url>
+    <content><![CDATA[<h1 id="一种很新的离散化"><a href="#一种很新的离散化" class="headerlink" title="一种很新的离散化"></a>一种很新的离散化</h1><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">a</span><span class="params">(n + <span class="number">1</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">discrete</span><span class="params">(<span class="type">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">p</span><span class="params">(n + <span class="number">1</span>)</span></span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>;i &lt;= n;i ++) p[i] = i;</span><br><span class="line">    <span class="built_in">sort</span>(p.<span class="built_in">begin</span>() + <span class="number">1</span>, p.<span class="built_in">end</span>(), [&amp;](<span class="type">int</span> x, <span class="type">int</span> y)&#123;</span><br><span class="line">        <span class="keyword">return</span> a[x] &lt; a[y];</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>;i &lt;= n;i ++)</span><br><span class="line">        a[p[i]] = i;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>sort</code> 得到的 <code>p</code> 数组, 其中 <code>p[i]</code> 代表 <code>a</code> 数组中第 <code>i</code> 小的元素的下标</li>
+<li>根据 <code>p</code> 数组, 再用一个 for 循环, 将 <code>a</code> 数组离散化为 $1 \to n$</li>
+</ul>
+]]></content>
+      <categories>
+        <category>算法学习</category>
+      </categories>
+      <tags>
+        <tag>algorithm</tag>
+        <tag>离散化</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>git操作</title>
+    <url>/2024/03/23/46390b34.html</url>
+    <content><![CDATA[<ul>
+<li><p><code>git branch -f master HEAD~3</code></p>
+<p>强制使得 <code>master</code> 分支指向 <code>HEAD</code> 向上追溯 $3$ 次的位置</p>
+</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>背包专题</title>
+    <url>/2024/03/23/4f2ce235.html</url>
+    <content><![CDATA[<h1 id="01背包"><a href="#01背包" class="headerlink" title="01背包"></a>01背包</h1><p>==从后往前更新==</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">1e5</span> + <span class="number">10</span>;</span><br><span class="line"><span class="type">int</span> n, m;</span><br><span class="line"><span class="type">int</span> v[N], w[N];</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i  = <span class="number">1</span>; i &lt;= n; i ++)</span><br><span class="line">&#123;    </span><br><span class="line">    cin &gt;&gt; v[i] &gt;&gt; w[i];</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j = m; j &gt;= v[i]; j++)</span><br><span class="line">        dp[j] = <span class="built_in">max</span>(dp[j], dp[j - v[i]] + w[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="完全背包"><a href="#完全背包" class="headerlink" title="完全背包"></a>完全背包</h1><p>==从前往后更新==</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">1e5</span> + <span class="number">10</span>;</span><br><span class="line"><span class="type">int</span> n, m;</span><br><span class="line"><span class="type">int</span> v[N], w[N];</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i  = <span class="number">1</span>; i &lt;= n; i ++)</span><br><span class="line">&#123;    </span><br><span class="line">    cin &gt;&gt; v[i] &gt;&gt; w[i];</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j = v[i]; j &lt;= m; j++)</span><br><span class="line">        dp[j] = <span class="built_in">max</span>(dp[j], dp[j - v[i]] + w[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="多重背包"><a href="#多重背包" class="headerlink" title="多重背包"></a>多重背包</h1><p>==分别使用01和多重背包==</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">50000</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> dp[N];</span><br><span class="line"><span class="type">int</span> n, m;</span><br><span class="line"><span class="type">int</span> v[N], w[N], s[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cin &gt;&gt; v[i] &gt;&gt; w[i] &gt;&gt; s[i];</span><br><span class="line">        <span class="comment">//如果所有当前项的花费超过总的背包体积，约等于当前项无限多，完全背包处理</span></span><br><span class="line">        <span class="keyword">if</span> (s[i] * v[i] &gt;= m) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> j = v[i]; j &lt;= m; j++)</span><br><span class="line">                dp[j] = <span class="built_in">max</span>(dp[j], dp[j - v[i]] + w[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">//二进制分解使用01背包处理</span></span><br><span class="line">            <span class="type">int</span> k = <span class="number">1</span>, c = s[i];</span><br><span class="line">            <span class="keyword">while</span> (k &lt;= c)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> j = m; j &gt;= k * v[i]; j--)</span><br><span class="line">                    dp[j] = <span class="built_in">max</span>(dp[j], dp[j - k * v[i]] + w[i] * k);</span><br><span class="line">                c -= k;</span><br><span class="line">                k &lt;&lt;= <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (c)</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> j = m; j &gt;= c * v[i]; j--)</span><br><span class="line">                    dp[j] = <span class="built_in">max</span>(dp[j], dp[j - c * v[i]] + c * w[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; dp[m];</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="混合背包"><a href="#混合背包" class="headerlink" title="混合背包"></a>混合背包</h1><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">int</span> dp[<span class="number">1100</span>];</span><br><span class="line"><span class="type">int</span> q[<span class="number">1100</span>];</span><br><span class="line"><span class="type">int</span> hh = <span class="number">-1</span>, tt = <span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> n, m;cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>;i &lt;= n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> v, w, s;</span><br><span class="line">        cin &gt;&gt; v &gt;&gt; w &gt;&gt; s;</span><br><span class="line">        <span class="keyword">if</span>(s &lt; <span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> j = m;j &gt;= v;j --)</span><br><span class="line">                dp[j] = <span class="built_in">max</span>(dp[j - v] + w, dp[j]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(s == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> j = v;j &lt;= m;j ++)</span><br><span class="line">                dp[j] = <span class="built_in">max</span>(dp[j - v] + w, dp[j]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="type">int</span> k = <span class="number">1</span>, c = s;</span><br><span class="line">            <span class="keyword">while</span> (k &lt;= c)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> j = m; j &gt;= k * v; j--)</span><br><span class="line">                    dp[j] = <span class="built_in">max</span>(dp[j], dp[j - k * v] + w * k);</span><br><span class="line">                c -= k;</span><br><span class="line">                k &lt;&lt;= <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(c)</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> j = m; j &gt;= c * v; j--)</span><br><span class="line">                dp[j] = <span class="built_in">max</span>(dp[j], dp[j - c * v] + c * w);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; dp[m];</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>算法学习</category>
+      </categories>
+      <tags>
+        <tag>algorithm</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ssh访问</title>
+    <url>/2024/03/23/6cede086.html</url>
+    <content><![CDATA[<h1 id="ssh连接过程"><a href="#ssh连接过程" class="headerlink" title="ssh连接过程"></a>ssh连接过程</h1><h2 id="密钥类型"><a href="#密钥类型" class="headerlink" title="密钥类型"></a>密钥类型</h2><p><img src="../img/ssh%E8%AE%BF%E9%97%AE.assets/image-20240316001710619.png" alt="image-20240316001710619"></p>
+<p><img src="../img/ssh%E8%AE%BF%E9%97%AE.assets/image-20240316001727647.png" alt="image-20240316001727647"></p>
+<h2 id="认证流程"><a href="#认证流程" class="headerlink" title="认证流程"></a>认证流程</h2><p><code>SSH(Secure Shell)</code>是一种用于在网络上安全地进行远程登录和执行命令的协议。下面是 SSH 连接的简要流程：</p>
+<ol>
+<li><p><strong>客户端发起连接请求：</strong> 用户在本地计算机上的 <code>SSH</code> 客户端（比如 <code>OpenSSH</code> 或 <code>PuTTY</code>）输入远程服务器的地址和用户名，并发起连接请求。</p>
+</li>
+<li><p><strong>服务器端响应：</strong> 服务器监听 SSH 连接请求，并在收到连接请求后响应客户端。</p>
+</li>
+<li><p><strong>密钥交换：</strong> 客户端和服务器之间进行密钥交换，确保数据传输的安全性。这个过程通常包括以下步骤：</p>
+<ul>
+<li>客户端向服务器发送一个连接请求，并发送自己支持的加密算法列表。</li>
+<li>服务器从接收到的加密算法列表中选择一个加密算法，并发送自己的公钥给客户端。</li>
+<li>客户端使用服务器的公钥对一个随机生成的<strong>会话密钥(对称密钥)</strong>进行加密，并将加密后的会话密钥发送给服务器。</li>
+<li>服务器使用自己的私钥解密客户端发送的会话密钥。</li>
+</ul>
+</li>
+<li><p><strong>认证：</strong> 客户端将用户凭据（如密码或 SSH 密钥）发送给服务器进行身份认证。如果凭据验证成功，客户端将被授权访问服务器。</p>
+</li>
+<li><p><strong>会话建立：</strong> 认证成功后，客户端和服务器建立起安全的通信会话，可以在该会话中安全地传输数据。</p>
+</li>
+<li><p><strong>数据传输：</strong> 客户端和服务器之间可以安全地传输数据，包括登录命令、文件传输、远程执行命令等操作。</p>
+</li>
+<li><p><strong>连接关闭：</strong> 当用户退出登录或连接超时时，连接被关闭，SSH 会话结束。</p>
+</li>
+</ol>
+<p>总的来说，SSH 连接的流程涉及到密钥交换、身份认证和安全通信会话建立等步骤，确保了数据传输的安全性和可靠性。</p>
+<h1 id="区分authorized-keys与known-hosts文件"><a href="#区分authorized-keys与known-hosts文件" class="headerlink" title="区分authorized_keys与known_hosts文件"></a>区分authorized_keys与known_hosts文件</h1><p><code>authorized_keys</code> 和 <code>known_hosts</code> 都是与 SSH 密钥认证相关的文件，但它们在功能和用途上有所不同：</p>
+<ol>
+<li><p><strong>authorized_keys：</strong></p>
+<ul>
+<li>位置：<code>authorized_keys</code> 文件位于服务器上的用户家目录下的 <code>.ssh</code> 目录中（通常是 <code>~/.ssh/authorized_keys</code>）。</li>
+<li>用途：<code>authorized_keys</code> 文件用于存储用户的公钥，以便服务器可以使用这些公钥来验证用户的身份。当用户尝试通过 SSH 连接到服务器时，服务器会检查该用户的 <code>authorized_keys</code> 文件，以确定是否允许连接。如果用户的公钥在 <code>authorized_keys</code> 文件中被发现，则服务器会允许用户连接，并使用相应的私钥进行身份验证。</li>
+</ul>
+</li>
+<li><p><strong>known_hosts：</strong></p>
+<ul>
+<li>位置：<code>known_hosts</code> 文件位于用户家目录下的 <code>.ssh</code> 目录中（通常是 <code>~/.ssh/known_hosts</code>）。</li>
+<li>用途：<code>known_hosts</code> 文件用于存储用户访问过的远程主机的公钥信息。当用户首次连接到一个远程主机时，SSH 客户端会将该主机的公钥保存到自己的 <code>known_hosts</code> 文件中。随后，当用户再次连接到同一台主机时，SSH 客户端会使用 <code>known_hosts</code> 文件中存储的公钥来验证主机的身份，以确保连接的安全性。</li>
+</ul>
+</li>
+</ol>
+<p>因此，<code>authorized_keys</code> 文件用于服务器端存储用户的公钥，用于用户的身份验证；而 <code>known_hosts</code> 文件用于客户端存储已知主机的公钥，用于验证远程主机的身份。这两个文件在 SSH 认证过程中扮演着不同的角色，但都是确保连接安全性的重要组成部分。</p>
+]]></content>
+      <tags>
+        <tag>ssh</tag>
+        <tag>rsa加密</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>高数公式</title>
+    <url>/2024/03/23/29c7973.html</url>
+    <content><![CDATA[<h1 id="导数"><a href="#导数" class="headerlink" title="导数"></a>导数</h1><script type="math/tex; mode=display">
+\begin{align}
+    arctan'x&=\frac{1}{1+x^2}            \\
+    arccot'x&=-\frac{1}{1+x^2}            \\
+    \\
+    arcsin'x&=\frac{1}{\sqrt{1-x^2}}    \\
+    arccos'x&=-\frac{1}{\sqrt{1-x^2}}    \\
+    \\
+    tan'x&=sec^2x                        \\
+    cot'x&=-csc^2x                        \\
+    sec'x&=secxtanx                        \\
+    csx'x&=-cscxcotx                    \\
+    \\
+    sin^{(n)}x&=sinx(x+\frac{n\pi}{2})    \\
+    cos^{(n)}x&=cosx(x+\frac{n\pi}{2})    \\ 
+\end{align}</script><h1 id="积分"><a href="#积分" class="headerlink" title="积分"></a>积分</h1><script type="math/tex; mode=display">
+\begin{align}
+\int tanx\ dx&=-ln|cosx|+C            \\
+\int cotx\ dx&=ln|sinx|+C            \\
+\int cscx\ dx&=ln|cscx-cotx|+C        \\
+\int secx\ dx&=ln|secx+tanx|+C        \\
+
+\end{align}</script><h1 id="泰勒"><a href="#泰勒" class="headerlink" title="泰勒"></a>泰勒</h1><script type="math/tex; mode=display">
+\begin{align}
+e^x &\sim 1 + x + \frac{x^2}{2!}+\frac{x^3}{3!}\\
+\ln(1 + x) &\sim x - \frac{x^2}{2}+\frac{x^3}{3}\\
+(1+x)^{\alpha} &\sim 1 + \alpha x + \frac{\alpha(\alpha - 1)}{2!}x^2+o(x^2) \\
+\sin x &\sim x-\frac{x^3}{3!}+\frac{x^5}{5!}-\frac{x^7}{7!}\\
+\arcsin x &\sim x + \frac{x^3}{3!} + o(x^3) \\
+\cos x &\sim 1-\frac{x^2}{2!}+\frac{x^4}{4!}-\frac{x^6}{6!}+\frac{x^8}{8!}\\
+\tan x &\sim x+\frac{x^3}{3}+\frac{2x^5}{15}+\frac{17 x^7}{315} \\
+\arctan x &\sim x - \frac{x^3}{3!} + o(x^3) \\
+\frac{1}{1 + x}&\sim 1-x+x^2-x^3...=\sum_{n=0}^{\infty}(-1)^nx^n,\ (-1\lt x\lt1) \\
+\frac{1}{1 - x}&\sim1+x+x^2...+x^n=\sum_{n=0}^{\infty}x^n,\ (-1\lt x\lt1)
+\end{align}</script><h1 id="等价无穷小"><a href="#等价无穷小" class="headerlink" title="等价无穷小"></a>等价无穷小</h1><p><img src="https://s2.loli.net/2024/03/17/IiWKxwf29satbGA.png" alt="image-20231108143822054"></p>
+<script type="math/tex; mode=display">
+\begin{align}
+\ln(x+1) - x &\sim -\frac{1}{2}x^2 \\
+\ln(x + \sqrt{x^2+1}) &\sim x \\
+1 - (\cos{x})^a &\sim \frac{1}{2}ax^2 \ (a \ne 0) \\
+(1+x)^{\frac{1}{x}}-e &\sim -\frac{e}{2}x \ (x\rightarrow 0^+)\\
+x^2-\ln^2(1+x)&\sim x^3 \\
+\end{align}</script>]]></content>
+      <categories>
+        <category>考研学习</category>
+      </categories>
+      <tags>
+        <tag>math</tag>
+      </tags>
+  </entry>
+</search>
